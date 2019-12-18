@@ -1,0 +1,13 @@
+<ion-card class="photo-card" *ngIf="feedItem">
+  <ion-img [src]="feedItem.url"></ion-img>
+  <!-- <ion-card-header>
+    <ion-card-subtitle>Get Started</ion-card-subtitle>
+    <ion-card-title></ion-card-title>
+  </ion-card-header> -->
+  <ion-card-content>
+    <p>Species: {{feedItem.species}}</p>
+    <p>Diameter: {{feedItem.diameter}}</p>
+    <p>Length: {{feedItem.length}}</p>
+    <p>Quoted Price: {{feedItem.price}}</p>
+  </ion-card-content>
+</ion-card>

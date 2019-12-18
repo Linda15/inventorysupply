@@ -1,0 +1,41 @@
+version: "3"
+services:
+  reverseproxy:
+      image: techie3/inventory-reverseproxy
+      ports:
+          - 8080:8080
+      restart: always
+      depends_on:
+        - backend-user
+        - backend-feed
+  backend-user:
+    image: techie3/inventory-user
+    environment:
+      POSTGRESS_INV_USERNAME: $POSTGRESS_INV_USERNAME
+      POSTGRESS_INV_PASSWORD: $POSTGRESS_INV_PASSWORD
+      POSTGRESS_INV_DATABASE: $POSTGRESS_INV_DATABASE
+      POSTGRESS_INV_HOST: $POSTGRESS_INV_HOST 
+      AWS_REGION: $AWS_REGION 
+      AWS_PROFILE: $AWS_PROFILE 
+      AWS_INV_MEDIA_BUCKET: $AWS_INV_MEDIA_BUCKET
+      JWT_SECRET: $JWT_SECRET
+      URL: "http://localhost:8100"
+  backend-feed:
+    image: techie3/inventory-feed
+    volumes:
+      - //c/Users/LPan/.aws:/root/.aws
+      #- $HOME/.aws:/root/.aws
+    environment:
+      POSTGRESS_INV_USERNAME: $POSTGRESS_INV_USERNAME
+      POSTGRESS_INV_PASSWORD: $POSTGRESS_INV_PASSWORD
+      POSTGRESS_INV_DATABASE: $POSTGRESS_INV_DATABASE
+      POSTGRESS_INV_HOST: $POSTGRESS_INV_HOST 
+      AWS_REGION: $AWS_REGION 
+      AWS_PROFILE: $AWS_PROFILE
+      AWS_INV_MEDIA_BUCKET: $AWS_INV_MEDIA_BUCKET
+      JWT_SECRET: $JWT_SECRET
+      URL: "http://localhost:8100"
+  frontend:
+    image: techie3/inventory-frontend:local
+    ports:
+      - "8100:80"

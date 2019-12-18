@@ -1,0 +1,18 @@
+version: "3"
+services:
+  reverseproxy:
+    build:
+      context: .
+    image: techie3/inventory-reverseproxy
+  backend_user:
+    build:
+      context: ../../user
+    image: techie3/inventory-user
+  backend_feed:
+    build:
+      context: ../../feed  
+    image: techie3/inventory-feed
+  frontend:
+    build:
+      context: ../../frontend
+    image: techie3/inventory-frontend:local
